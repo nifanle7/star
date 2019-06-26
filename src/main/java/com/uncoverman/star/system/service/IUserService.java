@@ -14,5 +14,21 @@ import com.uncoverman.star.system.entity.User;
  * @since 2019-06-21
  */
 public interface IUserService extends IService<User> {
+
+    /**
+     * 查找用户详细信息
+     *
+     * @param user
+     * @param queryRequest
+     * @return
+     */
     IPage<User> findAll(User user, QueryRequest queryRequest);
+
+    /**
+     * 新增用户
+     *
+     * @param user user
+     */
+    void createUser(User user);
+
 }
