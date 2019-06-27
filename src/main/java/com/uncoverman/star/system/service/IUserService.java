@@ -16,7 +16,7 @@ import com.uncoverman.star.system.entity.User;
 public interface IUserService extends IService<User> {
 
     /**
-     * 查找用户详细信息
+     * 查找用户列表
      *
      * @param user
      * @param queryRequest
@@ -42,4 +42,11 @@ public interface IUserService extends IService<User> {
      * @param userIds
      */
     void deleteUsers(String[] userIds);
+
+    /**
+     * 查找用户
+     * @param username
+     * @return
+     */
+    User findByUsername(String username);
 }

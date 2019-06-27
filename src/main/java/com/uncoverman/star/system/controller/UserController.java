@@ -36,10 +36,15 @@ public class UserController extends BaseController {
         return new WebResponse().success().data(dataTable);
     }
 
+    @GetMapping("/{username}")
+    public User findByUsername(@PathVariable String username){
+        return userService.findByUsername(username);
+    }
+
     @PostMapping("/add")
     public WebResponse addUser(User user) throws WebException{
         try {
-            this.userService.createUser(user);
+            userService.createUser(user);
             return new WebResponse().success();
         } catch (Exception e) {
             String message = "新增用户失败";
@@ -51,7 +56,7 @@ public class UserController extends BaseController {
     @PostMapping("/update")
     public WebResponse updateUser(User user) throws WebException{
         try {
-            this.userService.updateUser(user);
+            userService.updateUser(user);
             return new WebResponse().success();
         } catch (Exception e) {
             String message = "新增用户失败";
@@ -64,7 +69,7 @@ public class UserController extends BaseController {
     public WebResponse deleteUsers(@PathVariable String userIds) throws WebException{
         try {
             String[] ids = userIds.split(StringPool.COMMA);
-            this.userService.deleteUsers(ids);
+            userService.deleteUsers(ids);
             return new WebResponse().success();
         } catch (Exception e) {
             String message = "删除用户失败";

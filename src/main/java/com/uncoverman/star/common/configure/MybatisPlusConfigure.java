@@ -1,4 +1,4 @@
-package com.uncoverman.star.common.config;
+package com.uncoverman.star.common.configure;
 
 import com.baomidou.mybatisplus.core.parser.ISqlParser;
 import com.baomidou.mybatisplus.extension.parsers.BlockAttackSqlParser;

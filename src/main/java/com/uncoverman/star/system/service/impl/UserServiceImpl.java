@@ -57,4 +57,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         List<String> list = Arrays.asList(userIds);
         removeByIds(list);
     }
+
+    @Override
+    public User findByUsername(String username) {
+        return this.baseMapper.findByUsername(username);
+    }
 }

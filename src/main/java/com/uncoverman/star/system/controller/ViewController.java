@@ -18,14 +18,14 @@ public class ViewController {
         return "/index";
     }
 
-    @GetMapping("/home")
-    public String home() {
-        return "/home";
+    @GetMapping("/login")
+    public String login() {
+        return "febs/views/login";
     }
 
     @GetMapping("views/system/user/add")
     public String test() {
-        return "/system/user/userAdd";
+        return "febs/views/system/user/userAdd";
     }
 }
 

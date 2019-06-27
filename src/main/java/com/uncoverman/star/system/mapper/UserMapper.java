@@ -2,6 +2,9 @@ package com.uncoverman.star.system.mapper;
 
 import com.uncoverman.star.system.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * <p>
@@ -12,5 +15,16 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @since 2019-06-21
  */
 public interface UserMapper extends BaseMapper<User> {
+
+    User findByUsername(String username);
+
+    /**
+     * 查找用户详细信息
+     *
+     * @param user 用户对象，用于传递查询条件
+     * @return List<User>
+     */
+    List<User> findUserDetail(@Param("user") User user);
+
 
 }
