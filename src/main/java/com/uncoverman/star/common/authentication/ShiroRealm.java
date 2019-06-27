@@ -10,11 +10,13 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by NFL on 2019/6/27.
  */
-public class UserRealm extends AuthorizingRealm{
+@Component
+public class ShiroRealm extends AuthorizingRealm{
 
     @Autowired
     private IUserService userService;
