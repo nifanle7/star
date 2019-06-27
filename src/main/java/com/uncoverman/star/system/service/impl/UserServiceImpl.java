@@ -11,7 +11,9 @@ import com.uncoverman.star.system.mapper.UserMapper;
 import com.uncoverman.star.system.service.IUserService;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -40,5 +42,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         user.setIsTab(User.TAB_OPEN);
         user.setPassword(MD5Util.encrypt(user.getUsername(), User.DEFAULT_PASSWORD));
         save(user);
+    }
+
+    @Override
+    public void updateUser(User user) {
+        user.setUsername(null);
+        user.setPassword(null);
+        user.setModifyTime(new Date());
+        updateById(user);
+    }
+
+    @Override
+    public void deleteUsers(String[] userIds) {
+        List<String> list = Arrays.asList(userIds);
+        removeByIds(list);
     }
 }

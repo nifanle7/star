@@ -31,4 +31,15 @@ public interface IUserService extends IService<User> {
      */
     void createUser(User user);
 
+    /**
+     * 修改用户
+     * @param user
+     */
+    void updateUser(User user);
+
+    /**
+     * 删除用户
+     * @param userIds
+     */
+    void deleteUsers(String[] userIds);
 }
