@@ -1,7 +1,6 @@
 package com.uncoverman.star.common.authentication;
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
-import com.uncoverman.star.common.properties.WebProperties;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.SecurityManager;
@@ -29,9 +28,6 @@ import java.util.*;
  */
 @Configuration
 public class ShiroConfig {
-
-    @Autowired
-    private WebProperties webProperties;
 
     //@Value("${spring.redis.host}")
     //private String host;
@@ -86,20 +82,25 @@ public class ShiroConfig {
         // 必须设置 securityManager
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         // 登录的 url
-        shiroFilterFactoryBean.setLoginUrl(webProperties.getShiro().getLoginUrl());
+        shiroFilterFactoryBean.setLoginUrl("/login");
         // 登录成功后跳转的 url
-        shiroFilterFactoryBean.setSuccessUrl(webProperties.getShiro().getSuccessUrl());
+        shiroFilterFactoryBean.setSuccessUrl("/index");
         // 未授权 url
-        shiroFilterFactoryBean.setUnauthorizedUrl(webProperties.getShiro().getUnauthorizedUrl());
+        shiroFilterFactoryBean.setUnauthorizedUrl("/unauthorized");
 
         LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         // 设置免认证 url
-        String[] anonUrls = StringUtils.splitByWholeSeparatorPreserveAllTokens(webProperties.getShiro().getAnonUrl(), ",");
-        for (String url : anonUrls) {
-            filterChainDefinitionMap.put(url, "anon");
-        }
+        filterChainDefinitionMap.put("/febs/**","anon");
+        filterChainDefinitionMap.put("/layui/**","anon");
+        filterChainDefinitionMap.put("/views/system/**","anon");
+        filterChainDefinitionMap.put("/system/**","anon");
+        filterChainDefinitionMap.put("/img/**","anon");
+        filterChainDefinitionMap.put("/json/**","anon");
+        filterChainDefinitionMap.put("/images/captcha","anon");
+
+
         // 配置退出过滤器，其中具体的退出代码 Shiro已经替我们实现了
-        filterChainDefinitionMap.put(webProperties.getShiro().getLogoutUrl(), "logout");
+        filterChainDefinitionMap.put("/logout", "logout");
 
         // 过滤链,从上往下执行,一般将 /**放在最为下面
         // 除上以外所有 url都必须认证通过才可以访问，未通过认证自动访问 LoginUrl
@@ -122,12 +123,12 @@ public class ShiroConfig {
         //securityManager.setRememberMeManager(rememberMeManager());
         return securityManager;
     }
-
-    @Bean
-    public Realm shiroRealm() {
-        ShiroRealm shiroRealm = new ShiroRealm();
-        return shiroRealm;
-    }
+    //
+    //@Bean
+    //public Realm shiroRealm() {
+    //    ShiroRealm shiroRealm = new ShiroRealm();
+    //    return shiroRealm;
+    //}
 
     /**
      * rememberMe cookie 效果是重开浏览器后无需重新登录

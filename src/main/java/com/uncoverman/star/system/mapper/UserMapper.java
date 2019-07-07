@@ -16,7 +16,7 @@ import java.util.List;
  */
 public interface UserMapper extends BaseMapper<User> {
 
-    User findByUsername(String username);
+    User findByUsername(@Param("username") String username);
 
     /**
      * 查找用户详细信息

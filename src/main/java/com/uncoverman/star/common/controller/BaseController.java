@@ -1,18 +1,18 @@
 package com.uncoverman.star.common.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.subject.Subject;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.apache.shiro.SecurityUtils.getSubject;
-
 public class BaseController {
 
-    //protected static Subject getSubject() {
-    //    return SecurityUtils.getSubject();
-    //}
+    protected static Subject getSubject() {
+        return SecurityUtils.getSubject();
+    }
     //
     //protected User getCurrentUser() {
     //    return (User) getSubject().getPrincipal();
