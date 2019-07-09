@@ -34,14 +34,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     }
 
     @Override
-    public void createUser(User user) {
+    public void addUser(User user) {
         user.setCreateTime(new Date());
         user.setStatus(User.STATUS_VALID);
         user.setAvatar(User.DEFAULT_AVATAR);
         user.setTheme(User.THEME_BLACK);
         user.setIsTab(User.TAB_OPEN);
         user.setPassword(MD5Util.encrypt(user.getUsername(), User.DEFAULT_PASSWORD));
-        save(user);
+        this.baseMapper.insert(user);
     }
 
     @Override
@@ -49,13 +49,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         user.setUsername(null);
         user.setPassword(null);
         user.setModifyTime(new Date());
-        updateById(user);
+        this.baseMapper.updateById(user);
     }
 
     @Override
     public void deleteUsers(String[] userIds) {
         List<String> list = Arrays.asList(userIds);
-        removeByIds(list);
+        this.baseMapper.deleteBatchIds(list);
     }
 
     @Override

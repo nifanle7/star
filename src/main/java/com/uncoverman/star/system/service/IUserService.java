@@ -29,7 +29,7 @@ public interface IUserService extends IService<User> {
      *
      * @param user user
      */
-    void createUser(User user);
+    void addUser(User user);
 
     /**
      * 修改用户

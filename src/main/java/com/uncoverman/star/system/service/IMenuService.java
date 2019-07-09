@@ -50,7 +50,7 @@ public interface IMenuService extends IService<Menu> {
      *
      * @param menu 菜单（按钮）对象
      */
-    void createMenu(Menu menu);
+    void addMenu(Menu menu);
 
     /**
      * 修改菜单（按钮）
@@ -65,4 +65,5 @@ public interface IMenuService extends IService<Menu> {
      * @param menuIds 菜单（按钮）id
      */
     void deleteMenus(String menuIds);
+
 }

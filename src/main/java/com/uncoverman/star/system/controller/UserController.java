@@ -44,7 +44,7 @@ public class UserController extends BaseController {
     @PostMapping("/add")
     public WebResponse addUser(User user) throws WebException{
         try {
-            userService.createUser(user);
+            userService.addUser(user);
             return new WebResponse().success();
         } catch (Exception e) {
             String message = "新增用户失败";
