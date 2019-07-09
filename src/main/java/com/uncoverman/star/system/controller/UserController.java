@@ -36,7 +36,7 @@ public class UserController extends BaseController {
         return new WebResponse().success().data(dataTable);
     }
 
-    @GetMapping("/{username}")
+    @GetMapping("/find/{username}")
     public User findByUsername(@PathVariable String username){
         return userService.findByUsername(username);
     }

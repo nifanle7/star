@@ -24,8 +24,14 @@ public class ViewController {
     }
 
     @GetMapping("views/system/user/add")
-    public String test() {
+    public String toAddUser() {
         return "febs/views/system/user/userAdd";
     }
+
+    @GetMapping("views/index")
+    public String toIndex() {
+        return "febs/views/index";
+    }
+
 }
 

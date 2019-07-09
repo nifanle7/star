@@ -92,12 +92,13 @@ public class ShiroConfig {
         // 设置免认证 url
         filterChainDefinitionMap.put("/febs/**","anon");
         filterChainDefinitionMap.put("/layui/**","anon");
-        filterChainDefinitionMap.put("/views/system/**","anon");
-        filterChainDefinitionMap.put("/system/**","anon");
         filterChainDefinitionMap.put("/img/**","anon");
         filterChainDefinitionMap.put("/json/**","anon");
         filterChainDefinitionMap.put("/images/captcha","anon");
-
+        // for test
+        filterChainDefinitionMap.put("/views/system/**","anon");
+        filterChainDefinitionMap.put("/system/**","anon");
+        filterChainDefinitionMap.put("/index","anon");
 
         // 配置退出过滤器，其中具体的退出代码 Shiro已经替我们实现了
         filterChainDefinitionMap.put("/logout", "logout");
