@@ -23,16 +23,15 @@
 <script th:src="@{layui/layui.js}"></script>
 <script th:inline="javascript">
     var ctx = [[@{/}]];
-    var currentUser = "admin";
-//    var currentUser = [[${user}]];
-//    currentUser.roleSet = [[${roles}]];
-//    currentUser.permissionSet = [[${permissions}]];
+    var currentUser = [[${user}]];
+    currentUser.roleSet = [[${roles}]];
+    currentUser.permissionSet = [[${permissions}]];
 
     layui.config({
         base: './febs/',
         debug: true
     }).extend({
-        request: 'lay/modules/request',
+//        request: 'lay/modules/request',
         formSelects: 'lay/extends/formSelects-v4.min',
         treeSelect: 'lay/extends/treeSelect',
         apexcharts: 'lay/extends/apexcharts.min',

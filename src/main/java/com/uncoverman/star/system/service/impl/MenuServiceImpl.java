@@ -27,7 +27,7 @@ import java.util.List;
 public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IMenuService {
     @Override
     public List<Menu> findUserPermissions(String username) {
-        return null;
+        return this.baseMapper.findUserPermissions(username);
     }
 
     @Override

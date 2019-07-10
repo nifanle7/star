@@ -1,9 +1,12 @@
 package com.uncoverman.star.common.authentication;
 
+import com.uncoverman.star.system.entity.Menu;
+import com.uncoverman.star.system.entity.Role;
 import com.uncoverman.star.system.entity.User;
 import com.uncoverman.star.system.service.IMenuService;
 import com.uncoverman.star.system.service.IRoleService;
 import com.uncoverman.star.system.service.IUserService;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -11,6 +14,10 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by NFL on 2019/6/27.
@@ -32,24 +39,24 @@ public class ShiroRealm extends AuthorizingRealm{
      */
     //@Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principal) {
-        //User user = (User) SecurityUtils.getSubject().getPrincipal();
-        //String username = user.getUsername();
-        //
+        User user = (User) SecurityUtils.getSubject().getPrincipal();
+        String username = user.getUsername();
+
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
-        //
-        //List<Role> roleList = this.roleService.findUserRole(username);
-        //Set<String> roleSet = new HashSet<String>();
-        //for (Role r : roleList) {
-        //    roleSet.add(r.getRoleName());
-        //}
-        //simpleAuthorizationInfo.setRoles(roleSet);
-        //
-        //List<Menu> permissionList = this.menuService.findUserPermissions(username);
-        //Set<String> permissionSet = new HashSet<String>();
-        //for (Menu m : permissionList) {
-        //    permissionSet.add(m.getPerms());
-        //}
-        //simpleAuthorizationInfo.setStringPermissions(permissionSet);
+
+        List<Role> roleList = this.roleService.findUserRole(username);
+        Set<String> roleSet = new HashSet<String>();
+        for (Role r : roleList) {
+            roleSet.add(r.getRoleName());
+        }
+        simpleAuthorizationInfo.setRoles(roleSet);
+
+        List<Menu> permissionList = this.menuService.findUserPermissions(username);
+        Set<String> permissionSet = new HashSet<String>();
+        for (Menu m : permissionList) {
+            permissionSet.add(m.getPerms());
+        }
+        simpleAuthorizationInfo.setStringPermissions(permissionSet);
         return simpleAuthorizationInfo;
     }
 
