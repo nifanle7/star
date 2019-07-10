@@ -30,17 +30,17 @@ public class RoleController extends BaseController {
     private IRoleService roleService;
 
     @GetMapping
-    public WebResponse findList(Role role) {
-        return new WebResponse().success().data(roleService.findRoles(role));
+    public WebResponse findAll(Role role) {
+        return new WebResponse().success().data(roleService.findAll(role));
     }
 
-    @GetMapping("list")
-    public WebResponse findPage(Role role, QueryRequest request) {
-        Map<String, Object> dataTable = getDataTable(this.roleService.findRoles(role, request));
+    @GetMapping("/list")
+    public WebResponse findAll(Role role, QueryRequest request) {
+        Map<String, Object> dataTable = getDataTable(this.roleService.findAll(role, request));
         return new WebResponse().success().data(dataTable);
     }
 
-    @PostMapping
+    @PostMapping("/add")
     public WebResponse addRole(Role role) throws WebException {
         try {
             this.roleService.addRole(role);
@@ -51,7 +51,7 @@ public class RoleController extends BaseController {
         }
     }
 
-    @GetMapping("delete/{roleIds}")
+    @GetMapping("/delete/{roleIds}")
     public WebResponse deleteRoles(@NotBlank(message = "{required}") @PathVariable String roleIds) throws WebException {
         try {
             this.roleService.deleteRoles(roleIds);
@@ -62,7 +62,7 @@ public class RoleController extends BaseController {
         }
     }
 
-    @PostMapping("update")
+    @PostMapping("/update")
     public WebResponse updateRole(Role role) throws WebException {
         try {
             this.roleService.updateRole(role);

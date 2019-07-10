@@ -31,7 +31,7 @@ public interface IRoleService extends IService<Role> {
      * @param role 角色对象（用于传递查询条件）
      * @return 角色集合
      */
-    List<Role> findRoles(Role role);
+    List<Role> findAll(Role role);
 
     /**
      * 查找所有角色（分页）
@@ -40,7 +40,7 @@ public interface IRoleService extends IService<Role> {
      * @param request request
      * @return IPage
      */
-    IPage<Role> findRoles(Role role, QueryRequest request);
+    IPage<Role> findAll(Role role, QueryRequest request);
 
     /**
      * 通过角色名称查找相应角色

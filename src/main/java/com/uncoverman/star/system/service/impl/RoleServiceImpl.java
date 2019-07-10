@@ -32,7 +32,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
     }
 
     @Override
-    public List<Role> findRoles(Role role) {
+    public List<Role> findAll(Role role) {
         QueryWrapper<Role> queryWrapper = new QueryWrapper<>();
         if (StringUtils.isNotBlank(role.getRoleName())){
             queryWrapper.like("role_name",role.getRoleName());
@@ -41,7 +41,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
     }
 
     @Override
-    public IPage<Role> findRoles(Role role, QueryRequest request) {
+    public IPage<Role> findAll(Role role, QueryRequest request) {
         Page<Role> rolePage = new Page<>(request.getPageNum(),request.getPageSize()) ;
         QueryWrapper<Role> queryWrapper = new QueryWrapper<>();
         if (StringUtils.isNotBlank(role.getRoleName())){

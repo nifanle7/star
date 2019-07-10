@@ -1,7 +1,9 @@
 package com.uncoverman.star.system.mapper;
 
-import com.uncoverman.star.system.entity.Menu;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.uncoverman.star.system.entity.Menu;
+
+import java.util.List;
 
 /**
  * <p>
@@ -12,5 +14,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @since 2019-06-21
  */
 public interface MenuMapper extends BaseMapper<Menu> {
-
+    List<Menu> findUserMenus(String username);
 }

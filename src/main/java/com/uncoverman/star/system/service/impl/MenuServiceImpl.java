@@ -32,7 +32,9 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
 
     @Override
     public MenuTree<Menu> findUserMenus(String username) {
-        return null;
+        List<Menu> menuList = this.baseMapper.findUserMenus(username);
+        List<MenuTree<Menu>> trees = this.convertMenus(menuList);
+        return TreeUtil.buildMenuTree(trees);
     }
 
     @Override
