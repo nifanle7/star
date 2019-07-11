@@ -36,7 +36,6 @@ public class DeptController extends BaseController {
 
     @PostMapping("/add")
     public WebResponse addDept(Dept dept){
-
         return new WebResponse().success();
     }
 }

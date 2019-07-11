@@ -30,7 +30,7 @@ public class ViewController {
 
     @GetMapping("views/index")
     public String toIndex() {
-        return "febs/views/index";
+        return "views/index";
     }
 
 }
