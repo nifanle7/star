@@ -1,11 +1,19 @@
 package com.uncoverman.star.system.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.StringPool;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.uncoverman.star.common.entity.QueryRequest;
 import com.uncoverman.star.system.entity.Dept;
 import com.uncoverman.star.system.mapper.DeptMapper;
 import com.uncoverman.star.system.service.IDeptService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -20,7 +28,31 @@ import java.util.List;
 public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements IDeptService {
 
     @Override
-    public List<Dept> findAll(){
-        return this.baseMapper.selectList(null);
+    public IPage<Dept> findAll(Dept dept, QueryRequest queryRequest){
+        Page<Dept> page = new Page<>(queryRequest.getPageNum(),queryRequest.getPageSize());
+        QueryWrapper queryWrapper = new QueryWrapper();
+        if (StringUtils.isNotBlank(dept.getDeptName())){
+            queryWrapper.like("dept_name",dept.getDeptName());
+        }
+        queryWrapper.orderByAsc("dept_name");
+        return this.baseMapper.selectPage(page,queryWrapper);
     };
+
+    @Override
+    public void addDept(Dept dept) {
+        dept.setCreateTime(new Date());
+        this.baseMapper.insert(dept);
+    }
+
+    @Override
+    public void updateDept(Dept dept) {
+        dept.setModifyTime(new Date());
+        this.baseMapper.updateById(dept);
+    }
+
+    @Override
+    public void deleteDepts(String deptIds) {
+        List<String> deptIdList = Arrays.asList(deptIds.split(StringPool.COMMA));
+        this.baseMapper.deleteBatchIds(deptIdList);
+    }
 }

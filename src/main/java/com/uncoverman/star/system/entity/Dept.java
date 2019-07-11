@@ -9,7 +9,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
 * <p>
@@ -55,13 +55,13 @@ public class Dept implements Serializable {
     * 创建时间
     */
     @TableField("CREATE_TIME")
-    private LocalDateTime createTime;
+    private Date createTime;
 
     /**
     * 修改时间
     */
     @TableField("MODIFY_TIME")
-    private LocalDateTime modifyTime;
+    private Date modifyTime;
 
 
 }
