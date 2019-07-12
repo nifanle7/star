@@ -1,10 +1,143 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="/plugins/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/plugins/layui/css/layui.css">
+    <link rel="stylesheet" href="/css/app.css">
 </head>
-<body>
-
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <header class="layui-header">
+        <div class="layui-logo">
+            <h1><a href="/admin"><i class="fa fa-home"></i><span> Star</span></a></h1>
+        </div>
+        <ul class="layui-nav layui-layout-left layui-hide-xs">
+            <li class="layui-nav-item side-switch layui-this"><a href="javascript:;"><i class="fa fa-dedent"></i></a></li>
+            <span class="layui-nav-bar" style="left: 47px; top: 58px; width: 0px; opacity: 0;"></span>
+        </ul>
+    </header>
+    <div class="side layui-bg-black" id="sidebar-nav">
+        <div class="side-logo">
+            <h1><a href="/admin"><i class="fa fa-home"></i><span> Star</span></a></h1>
+        </div>
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree layui-inline"  lay-filter="nav">
+                <li class="layui-nav-item">
+                    <a class="nav-item-a" href="javascript:;">
+                        <i class="fa fa-fw fa-smile-o"></i><span>系统管理</span>
+                        <span class="layui-nav-more"></span>
+                    </a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="/views/system/user"><i class="fa fa-circle-o fa-fw"></i><span>用户管理</span></a></dd>
+                        <dd><a href="/views/system/role"><i class="fa fa-circle-o fa-fw"></i><span>角色管理</span></a></dd>
+                        <dd><a href="/views/system/menu"><i class="fa fa-circle-o fa-fw"></i><span>菜单管理</span></a></dd>
+                        <dd><a href="/views/system/dept"><i class="fa fa-circle-o fa-fw"></i><span>部门管理</span></a></dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="layui-body">
+        <div style="padding: 15px;">
+            <table id="userTable" filter="userTable"></table>
+        </div>
+    </div>
+</div>
 </body>
+<script src="/plugins/layui/layui.js"></script>
+<script src="/js/app.js"></script>
+
+<script th:inline="none">
+    layui.use('table', function() {
+
+        var table = layui.table;
+
+        //第一个实例
+        table.render({
+            elem: '#userTable'
+            , height: 530
+            , url: '/system/user/list' //数据接口
+            , method: 'get'
+            , request: {
+                pageName: 'pageNum',//分页参数页码映射
+                limitName: 'pageSize'//分页单页显示量映射
+            },
+            parseData: function (res) {
+                return {
+                    "code": res.code === 200 ? 0 : res.code,//解析后端返回的数据，layui要求code为0
+                    "count": res.data.total,
+                    "data": res.data.rows
+                }
+            }
+            , page: false //开启分页
+            , limit: 10
+            , limits: [20, 100, 500]
+            , cols: [[ //表头
+                {type: 'checkbox'}
+                , {field: 'userId', title: 'ID', width: 80, sort: true}
+                , {field: 'username', title: '名字', width: 200}
+            ]]
+            , toolbar: 'default'
+        });
+
+        //监听工具条
+        table.on('toolbar(userTable)', function (obj) { //注：tool是工具条事件名，postTable是table原始容器的属性 lay-filter="对应的值"
+
+            var data = table.checkStatus('userTable').data; //表格id
+            switch (obj.event) {
+                case 'add':
+                    addRow();
+                    break;
+                case 'update':
+                    updateRow(data);
+                    break;
+                case 'delete':
+                    deleteRow(data);
+                    break;
+            };
+        });
+
+
+        function addRow() {
+            window.location.href = "views/system/user/addUser";
+        }
+
+        function updateRow(data) {
+            if (data.length == 1) {
+                window.location.href = "views/system/user/editUser?userId=" + data[0].userId;
+            } else {
+                layer.msg('请选中一行记录');
+            }
+        }
+
+        function deleteRow(data) {
+            if (data.length > 0) {
+                var userIds = '';
+                for (var i = 0; i < data.length; i++) {
+                    userIds += data[i].userId + ",";
+                    layer.confirm('确定删除？', function () {
+                        //向服务端发送删除指令
+                        $.ajax({
+                            type: 'post',
+                            url: '/system/user/delete',
+                            data: {userIds: userIds},
+                            success: function () {
+                                layer.msg('删除成功啦', {icon: 1}, {time: 2000});
+                                table.reload('userTable', {});
+                            },
+                            error: function () {
+                                layer.msg('连接网络失败，请检查网络设置或联系管理员', {icon: 2}, {time: 2000});
+                            }
+                        });
+                    });
+                }
+            } else {
+                layer.msg('请至少选中一条记录');
+            }
+        }
+    });
+</script>
 </html>

@@ -17,6 +17,11 @@ public class WebResponse extends HashMap<String, Object> {
         return this;
     }
 
+    public WebResponse count(Object count) {
+        this.put("count", count);
+        return this;
+    }
+
     public WebResponse data(Object data) {
         this.put("data", data);
         return this;

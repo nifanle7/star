@@ -100,7 +100,7 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/plugins/**","anon");
 
         // for test
-        filterChainDefinitionMap.put("/views/system/**","anon");
+        filterChainDefinitionMap.put("/views/**","anon");
         filterChainDefinitionMap.put("/system/**","anon");
         filterChainDefinitionMap.put("/index","anon");
 

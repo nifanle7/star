@@ -15,23 +15,33 @@ public class ViewController {
 
     @GetMapping("/index")
     public String index() {
-        return "/index";
+        return "views/index";
+    }
+    @GetMapping("views/index")
+    public String indexView() {
+        return "views/index";
     }
 
     @GetMapping("/login")
     public String login() {
-        return "febs/views/login";
+        return "views/login";
+    }
+
+    @GetMapping("views/system/user")
+    public String userView() {
+        return "views/system/user";
     }
 
     @GetMapping("views/system/user/add")
-    public String toAddUser() {
-        return "febs/views/system/user/userAdd";
+    public String userAddView() {
+        return "views/system/userAdd";
     }
 
-    @GetMapping("views/index")
-    public String toIndex() {
-        return "views/index";
+    @GetMapping("views/system/dept")
+    public String deptView() {
+        return "views/system/dept";
     }
+
 
 }
 
