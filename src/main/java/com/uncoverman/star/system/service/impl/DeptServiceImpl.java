@@ -5,13 +5,16 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.uncoverman.star.common.entity.DeptTree;
 import com.uncoverman.star.common.entity.QueryRequest;
+import com.uncoverman.star.common.utils.TreeUtil;
 import com.uncoverman.star.system.entity.Dept;
 import com.uncoverman.star.system.mapper.DeptMapper;
 import com.uncoverman.star.system.service.IDeptService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -26,6 +29,26 @@ import java.util.List;
  */
 @Service
 public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements IDeptService {
+
+    @Override
+    public List<DeptTree<Dept>> findAll() {
+        List<Dept> depts = this.baseMapper.selectList(new QueryWrapper<>());
+        List<DeptTree<Dept>> trees = this.convertDepts(depts);
+        return TreeUtil.buildDeptTree(trees);
+    }
+
+    @Override
+    public List<DeptTree<Dept>> findAll(Dept dept) {
+        QueryWrapper<Dept> queryWrapper = new QueryWrapper<>();
+
+        if (StringUtils.isNotBlank(dept.getDeptName()))
+            queryWrapper.lambda().eq(Dept::getDeptName, dept.getDeptName());
+        queryWrapper.lambda().orderByAsc(Dept::getOrderNum);
+
+        List<Dept> depts = this.baseMapper.selectList(queryWrapper);
+        List<DeptTree<Dept>> trees =  this.convertDepts(depts);
+        return TreeUtil.buildDeptTree(trees);
+    }
 
     @Override
     public IPage<Dept> findAll(Dept dept, QueryRequest queryRequest){
@@ -54,5 +77,18 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements ID
     public void deleteDepts(String deptIds) {
         List<String> deptIdList = Arrays.asList(deptIds.split(StringPool.COMMA));
         this.baseMapper.deleteBatchIds(deptIdList);
+    }
+
+    private List<DeptTree<Dept>> convertDepts(List<Dept> depts){
+        List<DeptTree<Dept>> trees = new ArrayList<>();
+        depts.forEach(dept -> {
+            DeptTree<Dept> tree = new DeptTree<>();
+            tree.setId(String.valueOf(dept.getDeptId()));
+            tree.setParentId(String.valueOf(dept.getParentId()));
+            tree.setName(dept.getDeptName());
+            tree.setData(dept);
+            trees.add(tree);
+        });
+        return trees;
     }
 }
