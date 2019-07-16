@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>user</title>
     <link rel="stylesheet" href="/plugins/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="/plugins/layui/css/layui.css">
     <link rel="stylesheet" href="/css/app.css">
@@ -15,7 +15,7 @@
 
     <div class="layui-body">
         <div style="padding: 15px;">
-            <table id="userTable" filter="userTable"></table>
+            <table id="userTable" lay-filter="userTable"></table>
         </div>
     </div>
 </div>
@@ -46,13 +46,19 @@
                     "data": res.data.rows
                 }
             }
-            , page: false //开启分页
+            , page: true //开启分页
             , limit: 10
-            , limits: [20, 100, 500]
+            , limits: [10, 100, 500]
             , cols: [[ //表头
                 {type: 'checkbox'}
                 , {field: 'userId', title: 'ID', width: 80, sort: true}
-                , {field: 'username', title: '名字', width: 200}
+                , {field: 'username', title: '名字', width: 150}
+                , {field: 'company', title: '公司', width: 100}
+                , {field: 'dept', title: '部门', width: 100}
+                , {field: 'email', title: '邮箱', width: 180}
+                , {field: 'mobile', title: '手机', width: 140}
+                , {field: 'ssex', title: '性别', width: 80}
+                , {field: 'description', title: '备注', width: 300}
             ]]
             , toolbar: 'default'
         });
@@ -76,11 +82,13 @@
 
 
         function addRow() {
-//            window.location.href = "views/system/user/addUser";
             layer.open({
                 type: 2,
-                skin: 'layui-layer-rim', //加上边框
-                area: ['350px', '360px'], //宽高
+                title: '新增用户',
+                area: ['750px', '280px'], //宽高
+                shadeClose: true,
+                shade: 0.8,
+                maxmin: true,//放大缩小按钮
 
                 content: '/views/system/userAdd'  //调到新增页面
             });
@@ -99,22 +107,22 @@
                 var userIds = '';
                 for (var i = 0; i < data.length; i++) {
                     userIds += data[i].userId + ",";
-                    layer.confirm('确定删除？', function () {
-                        //向服务端发送删除指令
-                        $.ajax({
-                            type: 'post',
-                            url: '/system/user/delete',
-                            data: {userIds: userIds},
-                            success: function () {
-                                layer.msg('删除成功啦', {icon: 1}, {time: 2000});
-                                table.reload('userTable', {});
-                            },
-                            error: function () {
-                                layer.msg('连接网络失败，请检查网络设置或联系管理员', {icon: 2}, {time: 2000});
-                            }
-                        });
-                    });
                 }
+                layer.confirm('确定删除？', function () {
+                    //向服务端发送删除指令
+                    $.ajax({
+                        type: 'post',
+                        url: '/system/user/delete/'+userIds,
+                        //data: {userIds: userIds},
+                        success: function () {
+                            layer.msg('删除成功', {icon: 1}, {time: 2000});
+                            table.reload('userTable', {});
+                        },
+                        error: function () {
+                            layer.msg('删除失败', {icon: 2}, {time: 2000});
+                        }
+                    });
+                });
             } else {
                 layer.msg('请至少选中一条记录');
             }

@@ -32,7 +32,7 @@ public class ViewController {
         return "views/system/user";
     }
 
-    @GetMapping("views/system/user/userAdd")
+    @GetMapping("views/system/userAdd")
     public String userAddView() {
         return "views/system/userAdd";
     }

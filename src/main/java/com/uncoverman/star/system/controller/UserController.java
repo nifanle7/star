@@ -65,7 +65,7 @@ public class UserController extends BaseController {
         }
     }
 
-    @GetMapping("/delete/{userIds}")
+    @PostMapping("/delete/{userIds}")
     public WebResponse deleteUsers(@PathVariable String userIds) throws WebException{
         try {
             String[] ids = userIds.split(StringPool.COMMA);

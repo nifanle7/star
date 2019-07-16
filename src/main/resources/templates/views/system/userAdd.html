@@ -1,10 +1,99 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>userAdd</title>
+    <link rel="stylesheet" href="/plugins/layui/css/layui.css">
+
 </head>
 <body>
-    user
+<form class="layui-form" action="">
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">用户名</label>
+            <div class="layui-input-inline">
+                <input name="username" lay-verify="required" autocomplete="off" class="layui-input" type="text">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">性别</label>
+            <div class="layui-input-inline">
+                <input name="ssex" lay-verify="required" autocomplete="off" class="layui-input" type="text">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">公司</label>
+            <div class="layui-input-inline">
+                <input name="company" autocomplete="off" class="layui-input" type="text">
+            </div>
+        </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label">部门</label>
+            <div class="layui-input-inline">
+                <input name="dept" autocomplete="off" class="layui-input" type="text">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">邮箱</label>
+            <div class="layui-input-inline">
+                <input name="email" autocomplete="off" class="layui-input" type="text">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">手机</label>
+            <div class="layui-input-inline">
+                <input name="mobile" autocomplete="off" class="layui-input" type="text">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">备注</label>
+            <div class="layui-input-inline">
+                <input name="description" autocomplete="off" class="layui-input" type="text">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit="" lay-filter="userForm">保存</button>
+            </div>
+        </div>
+    </div>
+</form>
 </body>
+
+<script src="/plugins/layui/layui.js"></script>
+<script>
+    layui.use(['form', 'layedit'] ,function(){
+        var $ = layui.jquery
+            ,form = layui.form
+            ,layer = layui.layer
+            ,layedit = layui.layedit;
+        var index = parent.layer.getFrameIndex(window.name); //成功的时候点击 确定 会关闭子窗口，这里获取一下子窗口
+        form.render();
+        //监听提交
+        form.on('submit(userForm)', function(data){ //这块要跟表单中的lay-filter对应
+            $.ajax({
+                url: "/system/user/add",
+                type: "post",
+                async: false,   //不要让它异步提交
+                data: data.field,
+                dataType: "json",
+                success: function (data) {
+                    if(data.msg!='0'){
+                        layer.alert("新增成功",{icon: 1,time:2000},function () {
+                            layer.close(layer.index);
+                            window.parent.location.reload();    //重新加载父页面，进行数据刷新
+                        });
+                    } else{
+                        layer.alert("新增失败",{icon: 2,time:2000});
+                    }
+                }
+            });
+            return false;
+        });
+
+    });
+</script>
+
 </html>
