@@ -32,7 +32,7 @@
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">部门</label>
-            <div class="layui-input-inline">
+            <div class="layui-input-block">
                 <input type="text" name="deptId" id="user-add-dept" class="layui-input">
             </div>
         </div>
@@ -66,20 +66,32 @@
                 <button class="layui-btn" lay-submit="" lay-filter="userForm">保存</button>
             </div>
         </div>
+        <div id="tree"></div>
     </div>
 </form>
 </body>
 
 <script src="/plugins/layui/layui.js"></script>
 <script>
-    layui.use(['form', 'treeSelect', 'layedit'] ,function(){
+    layui.use(['form', 'tree', 'layedit'] ,function(){
         var $ = layui.jquery
             ,form = layui.form
-            ,treeSelect = layui.treeSelect
+            ,tree = layui.tree
             ,layer = layui.layer
             ,layedit = layui.layedit;
         var index = parent.layer.getFrameIndex(window.name); //成功的时候点击 确定 会关闭子窗口，这里获取一下子窗口
+
         form.render();
+        
+        $.get('/system/dept/select/tree',{},function (res) {
+            tree.render({
+                elem: '#tree',
+                data: res,
+                placeholder: '请选择',
+                search: false
+            });
+        });
+
         //监听提交
         form.on('submit(userForm)', function(data){ //这块要跟表单中的lay-filter对应
             $.ajax({
@@ -102,13 +114,7 @@
             return false;
         });
 
-        treeSelect.render({
-            elem: '#user-add-dept',
-            type: 'get',
-            data: '/system/dept/select/tree',
-            placeholder: '请选择',
-            search: false
-        });
+
 
     });
 </script>
