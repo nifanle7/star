@@ -23,7 +23,25 @@
 <script src="/plugins/layui/layui.js"></script>
 <script src="/plugins/jquery/jquery.min.js"></script>
 <script src="/js/app.js"></script>
-
+<script type="text/html" id="user-sex">
+    {{#
+    var sex = {
+    2: {title: '保密'},
+    1: {title: '女'},
+    0: {title: '男'}
+    }[d.ssex];
+    }}
+    <span>{{ sex.title }}</span>
+</script>
+<script type="text/html" id="user-status">
+    {{#
+    var status = {
+    1: {title: '有效', color: 'green'},
+    0: {title: '禁用', color: 'volcano'}
+    }[d.status];
+    }}
+    <span class="layui-badge">{{ status.title }}</span>
+</script>
 <script th:inline="none">
     layui.use('table', function() {
 
@@ -57,8 +75,9 @@
                 , {field: 'dept', title: '部门', width: 100}
                 , {field: 'email', title: '邮箱', width: 180}
                 , {field: 'mobile', title: '手机', width: 140}
-                , {field: 'ssex', title: '性别', width: 80}
+                , {templet: '#user-sex', title: '性别', width: 80}
                 , {field: 'description', title: '备注', width: 300}
+                , {templet: '#user-status', title: '状态', width: 80}
             ]]
             , toolbar: 'default'
         });
