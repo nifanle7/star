@@ -25,6 +25,15 @@ public interface IUserService extends IService<User> {
     IPage<User> findAll(User user, QueryRequest queryRequest);
 
     /**
+     * 查找用户详细信息
+     *
+     * @param queryRequest
+     * @param user    用户对象，用于传递查询条件
+     * @return IPage
+     */
+    IPage<User> findUserDetail(User user, QueryRequest queryRequest);
+
+    /**
      * 新增用户
      *
      * @param user user

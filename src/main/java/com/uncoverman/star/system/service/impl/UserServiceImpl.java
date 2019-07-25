@@ -29,8 +29,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     public IPage<User> findAll(User user, QueryRequest queryRequest) {
         Page<User> page = new Page<>(queryRequest.getPageNum(),queryRequest.getPageSize());
         QueryWrapper<User> wrapper = new QueryWrapper<>();
-        wrapper.orderByDesc("username");
+        wrapper.orderByAsc("username");
         return this.baseMapper.selectPage(page,wrapper);
+}
+
+    @Override
+    public IPage<User> findUserDetail(User user, QueryRequest queryRequest) {
+        Page<User> page = new Page<>(queryRequest.getPageNum(),queryRequest.getPageSize());
+        return this.baseMapper.findUserDetailPage(page,user);
     }
 
     @Override

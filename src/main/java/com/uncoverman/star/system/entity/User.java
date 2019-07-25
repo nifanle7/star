@@ -12,6 +12,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.NotBlank;
+
 /**
 * <p>
 * 用户表
@@ -121,7 +123,7 @@ public class User implements Serializable {
     * 性别 0男 1女 2保密
     */
     @TableField("SSEX")
-    private String ssex;
+    private String sex;
 
     /**
     * 是否开启tab，0关闭 1开启
@@ -146,6 +148,30 @@ public class User implements Serializable {
     */
     @TableField("DESCRIPTION")
     private String description;
+
+    /**
+     * 部门名称
+     */
+    @TableField(exist = false)
+    private String deptName;
+
+    @TableField(exist = false)
+    private String createTimeFrom;
+    @TableField(exist = false)
+    private String createTimeTo;
+    /**
+     * 角色 ID
+     */
+    @NotBlank(message = "{required}")
+    @TableField(exist = false)
+    private String roleId;
+
+    @TableField(exist = false)
+    private String roleName;
+
+    public Long getId() {
+        return userId;
+    }
 
 
 }

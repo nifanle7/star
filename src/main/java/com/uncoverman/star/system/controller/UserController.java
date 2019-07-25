@@ -31,8 +31,8 @@ public class UserController extends BaseController {
     private IUserService userService;
 
     @GetMapping("/list")
-    public WebResponse findAll(User user, QueryRequest queryRequest){
-        Map<String,Object> dataTable = getDataTable(userService.findAll(user,queryRequest));
+    public WebResponse findUserDetail(User user, QueryRequest queryRequest){
+        Map<String,Object> dataTable = getDataTable(userService.findUserDetail(user,queryRequest));
         return new WebResponse().success().data(dataTable);
     }
 
