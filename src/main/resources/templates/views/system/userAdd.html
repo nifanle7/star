@@ -19,9 +19,9 @@
         <div class="layui-inline">
             <label class="layui-form-label">性别</label>
             <div class="layui-input-block">
-                <input type="radio" name="ssex" value="0" title="男性">
-                <input type="radio" name="ssex" value="1" title="女性">
-                <input type="radio" name="ssex" value="2" title="保密" checked="">
+                <input type="radio" name="sex" value="0" title="男性">
+                <input type="radio" name="sex" value="1" title="女性">
+                <input type="radio" name="sex" value="2" title="保密" checked="">
             </div>
         </div>
         <div class="layui-inline">
@@ -32,7 +32,7 @@
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">部门</label>
-            <div class="layui-input-block">
+            <div class="layui-input-inline">
                 <input type="text" name="deptId" id="user-add-dept" class="layui-input">
             </div>
         </div>
@@ -66,7 +66,7 @@
                 <button class="layui-btn" lay-submit="" lay-filter="userForm">保存</button>
             </div>
         </div>
-        <div id="tree"></div>
+        <!--<div id="tree"></div>-->
     </div>
 </form>
 </body>
@@ -83,14 +83,14 @@
 
         form.render();
         
-        $.get('/system/dept/select/tree',{},function (res) {
-            tree.render({
-                elem: '#tree',
-                data: res,
-                placeholder: '请选择',
-                search: false
-            });
-        });
+//        $.get('/system/dept/select/tree',{},function (res) {
+//            tree.render({
+//                elem: '#tree',
+//                data: res,
+//                placeholder: '请选择',
+//                search: false
+//            });
+//        });
 
         //监听提交
         form.on('submit(userForm)', function(data){ //这块要跟表单中的lay-filter对应
