@@ -40,7 +40,7 @@
         LEFT JOIN t_role r ON r.role_id = ur.role_id
         WHERE 1 = 1
         <if test="user.username != null and user.username != ''">
-            AND u.username = #{user.username}
+            AND u.username like concat('%' , #{user.username} , '%')
         </if>
         <if test="user.deptId != null and user.deptId != ''">
             AND d.dept_id = #{user.deptId}
@@ -52,7 +52,7 @@
             AND u.status = #{user.status}
         </if>
         <if test="user.mobile != null and user.mobile != ''">
-            AND u.mobile = #{user.mobile}
+            AND u.mobile like concat('%' , #{user.mobile} , '%')
         </if>
         group by u.username
     </select>
@@ -82,7 +82,7 @@
         LEFT JOIN t_role r ON r.role_id = ur.role_id
         WHERE 1 = 1
         <if test="user.username != null and user.username != ''">
-            AND u.username = #{user.username}
+            AND u.username like concat('%' , #{user.username} , '%')
         </if>
         <if test="user.deptId != null and user.deptId != ''">
             AND d.dept_id = #{user.deptId}
@@ -94,7 +94,7 @@
             AND u.status = #{user.status}
         </if>
         <if test="user.mobile != null and user.mobile != ''">
-            AND u.mobile = #{user.mobile}
+            AND u.mobile = like concat('%' , #{user.mobile} , '%')
         </if>
         group by u.username
     </select>
