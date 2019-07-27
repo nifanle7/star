@@ -7,16 +7,15 @@
 
 </head>
 <body>
-<form class="layui-form" action="">
-
-    <div class="layui-form-item">
-        <div class="layui-inline">
+<div class="layui-fluid" style="padding: 15px;">
+    <form class="layui-form" action="">
+        <div class="layui-form-item">
             <label class="layui-form-label">用户名</label>
-            <div class="layui-input-inline">
+            <div class="layui-input-block">
                 <input name="username" lay-verify="required" autocomplete="off" class="layui-input" type="text">
             </div>
         </div>
-        <div class="layui-inline">
+        <div class="layui-form-item">
             <label class="layui-form-label">性别</label>
             <div class="layui-input-block">
                 <input type="radio" name="sex" value="0" title="男性">
@@ -24,51 +23,52 @@
                 <input type="radio" name="sex" value="2" title="保密" checked="">
             </div>
         </div>
-        <div class="layui-inline">
+        <div class="layui-form-item">
             <label class="layui-form-label">公司</label>
-            <div class="layui-input-inline">
+            <div class="layui-input-block">
                 <input name="company" autocomplete="off" class="layui-input" type="text">
             </div>
         </div>
-        <div class="layui-inline">
+        <div class="layui-form-item">
             <label class="layui-form-label">部门</label>
-            <div class="layui-input-inline">
+            <div class="layui-input-block">
                 <input type="text" name="deptId" id="user-add-dept" class="layui-input">
             </div>
         </div>
-        <div class="layui-inline">
+        <div class="layui-form-item">
             <label class="layui-form-label">邮箱</label>
-            <div class="layui-input-inline">
+            <div class="layui-input-block">
                 <input name="email" autocomplete="off" class="layui-input" type="text">
             </div>
         </div>
-        <div class="layui-inline">
+        <div class="layui-form-item">
             <label class="layui-form-label">手机</label>
-            <div class="layui-input-inline">
+            <div class="layui-input-block">
                 <input name="mobile" autocomplete="off" class="layui-input" type="text">
             </div>
         </div>
-        <div class="layui-inline">
+        <div class="layui-form-item">
             <label class="layui-form-label">状态</label>
-            <div class="layui-input-inline">
+            <div class="layui-input-block">
                 <input type="radio" name="status" value="1" title="有效" checked="">
                 <input type="radio" name="status" value="0" title="禁用">
             </div>
         </div>
-        <div class="layui-block">
+        <div class="layui-form-item">
             <label class="layui-form-label">备注</label>
-            <div class="layui-input-inline">
+            <div class="layui-input-block">
                 <input name="description" autocomplete="off" class="layui-input" type="text">
             </div>
         </div>
-        <div class="layui-inline">
+            <!--<div id="tree"></div>-->
+        <div class="layui-form-item">
             <div class="layui-input-block">
                 <button class="layui-btn" lay-submit="" lay-filter="userForm">保存</button>
             </div>
         </div>
-        <!--<div id="tree"></div>-->
-    </div>
-</form>
+    </form>
+</div>
+
 </body>
 
 <script src="/plugins/layui/layui.js"></script>
@@ -82,7 +82,7 @@
         var index = parent.layer.getFrameIndex(window.name); //成功的时候点击 确定 会关闭子窗口，这里获取一下子窗口
 
         form.render();
-        
+
 //        $.get('/system/dept/select/tree',{},function (res) {
 //            tree.render({
 //                elem: '#tree',
