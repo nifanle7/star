@@ -73,10 +73,19 @@
 
 <script src="/plugins/layui/layui.js"></script>
 <script>
-    layui.use(['form', 'tree', 'layedit'] ,function(){
+    //config的设置是全局的
+    //链式编程
+    layui.config({
+        base: '/js/' //假设这是你存放拓展模块的根目录
+    }).extend({ //设定模块别名
+        treeSelect: 'lay/extends/treeSelect'
+    });
+
+    layui.use(['form', 'tree', 'layedit','treeSelect'] ,function(){
         var $ = layui.jquery
             ,form = layui.form
             ,tree = layui.tree
+            ,treeSelect = layui.treeSelect
             ,layer = layui.layer
             ,layedit = layui.layedit;
         var index = parent.layer.getFrameIndex(window.name); //成功的时候点击 确定 会关闭子窗口，这里获取一下子窗口
@@ -91,6 +100,13 @@
 //                search: false
 //            });
 //        });
+        treeSelect.render({
+            elem: '#user-add-dept',
+            type: 'get',
+            data: '/system/dept/select/tree',
+            placeholder: '请选择',
+            search: false
+        });
 
         //监听提交
         form.on('submit(userForm)', function(data){ //这块要跟表单中的lay-filter对应

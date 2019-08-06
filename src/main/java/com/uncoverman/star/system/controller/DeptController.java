@@ -33,7 +33,7 @@ public class DeptController extends BaseController {
     @Autowired
     private IDeptService deptService;
 
-    @GetMapping("select/tree")
+    @GetMapping("/select/tree")
     public List<DeptTree<Dept>> getDeptTree() throws WebException {
         try {
             return this.deptService.findAll();
@@ -43,7 +43,7 @@ public class DeptController extends BaseController {
         }
     }
 
-    @GetMapping("tree")
+    @GetMapping("/tree")
     public WebResponse getDeptTree(Dept dept) throws WebException {
         try {
             List<DeptTree<Dept>> depts = this.deptService.findAll(dept);

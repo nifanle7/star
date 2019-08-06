@@ -85,7 +85,7 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements ID
             DeptTree<Dept> tree = new DeptTree<>();
             tree.setId(String.valueOf(dept.getDeptId()));
             tree.setParentId(String.valueOf(dept.getParentId()));
-            tree.setTitle(dept.getDeptName());
+            tree.setName(dept.getDeptName());
             tree.setData(dept);
             trees.add(tree);
         });

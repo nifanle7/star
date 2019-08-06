@@ -79,6 +79,7 @@
 <script src="/plugins/layui/layui.js"></script>
 <script src="/plugins/jquery/jquery.min.js"></script>
 <script src="/js/app.js"></script>
+
 <script type="text/html" id="user-sex">
     {{#
     var sex = {
@@ -99,11 +100,20 @@
     <span class="layui-badge">{{ status.title }}</span>
 </script>
 <script th:inline="none">
-    layui.use(['jquery','table','form'], function() {
 
+    //config的设置是全局的
+    //链式编程
+    layui.config({
+        base: '/js/' //假设这是你存放拓展模块的根目录
+    }).extend({ //设定模块别名
+        treeSelect: 'lay/extends/treeSelect'
+    });
+
+    layui.use(['jquery','table','form','treeSelect'], function() {
         var $ = layui.jquery
             ,table = layui.table
             ,form = layui.form
+            ,treeSelect = layui.treeSelect
             ,tableIns;
 
         //数据表格初始化
@@ -139,6 +149,14 @@
                 , {templet: '#user-status', title: '状态', width: 80}
             ]]
             , toolbar: 'default'
+        });
+
+        treeSelect.render({
+            elem: '#dept',
+            type: 'get',
+            data: '/system/dept/select/tree',
+            placeholder: '请选择',
+            search: false
         });
 
         // 条件查询
