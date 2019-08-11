@@ -7,8 +7,14 @@
 
 </head>
 <body>
-<div class="layui-fluid" style="padding: 15px;">
-    <form class="layui-form" action="">
+<div class="layui-fluid" style="padding: 15px;" id="user-update">
+    <form class="layui-form" action="" lay-filter="user-update-form">
+        <div class="layui-form-item layui-hide">
+            <label class="layui-form-label">用户id</label>
+            <div class="layui-input-block">
+                <input type="text" name="userId" data-th-value="${user.userId}">
+            </div>
+        </div>
         <div class="layui-form-item">
             <label class="layui-form-label">用户名</label>
             <div class="layui-input-block">
@@ -20,7 +26,7 @@
             <div class="layui-input-block">
                 <input type="radio" name="sex" value="0" title="男性">
                 <input type="radio" name="sex" value="1" title="女性">
-                <input type="radio" name="sex" value="2" title="保密" checked="">
+                <input type="radio" name="sex" value="2" title="保密">
             </div>
         </div>
         <div class="layui-form-item">
@@ -32,7 +38,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">部门</label>
             <div class="layui-input-block">
-                <input type="text" name="deptId" id="user-add-dept" class="layui-input">
+                <input type="text" name="deptId" id="user-update-dept" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
@@ -60,7 +66,6 @@
                 <input name="description" autocomplete="off" class="layui-input" type="text">
             </div>
         </div>
-            <!--<div id="tree"></div>-->
         <div class="layui-form-item">
             <div class="layui-input-block">
                 <button class="layui-btn" lay-submit="" lay-filter="userForm">保存</button>
@@ -81,46 +86,61 @@
         treeSelect: 'lay/extends/treeSelect'
     });
 
-    layui.use(['form', 'treeSelect'] ,function(){
+    layui.use(['form','treeSelect'] ,function(){
         var $ = layui.jquery
             ,form = layui.form
             ,treeSelect = layui.treeSelect
-            ,layer = layui.layer;
+            ,layer = layui.layer
+            ,user = [[${user}]]; //需在script标签加th:inline="javascript"，否则无法转为js对象
 
         form.render();
 
+        initUserValue();
+
+        function initUserValue() {
+
+            form.val("user-update-form", {
+                "username": user.username,
+                "mobile": user.mobile,
+                "email": user.email,
+                "status": user.status,
+                "sex": user.sex,
+                "description": user.description
+            });
+        }
+
         treeSelect.render({
-            elem: '#user-add-dept',
+            elem: '#user-update-dept',
             type: 'get',
             data: '/system/dept/select/tree',
             placeholder: '请选择',
-            search: false
+            search: false,
+            success: function () {
+                treeSelect.checkNode('user-update-dept', user.deptId);
+            }
         });
 
         //监听提交
         form.on('submit(userForm)', function(data){ //这块要跟表单中的lay-filter对应
             $.ajax({
-                url: "/system/user/add",
+                url: "/system/user/update",
                 type: "post",
                 async: false,   //不要让它异步提交
                 data: data.field,
                 dataType: "json",
                 success: function (data) {
                     if(data.msg!='0'){
-                        layer.alert("新增成功",{icon: 1,time:2000},function () {
+                        layer.alert("修改成功",{icon: 1,time:2000},function () {
                             layer.close(layer.index);
                             window.parent.location.reload();    //重新加载父页面，进行数据刷新
                         });
                     } else{
-                        layer.alert("新增失败",{icon: 2,time:2000});
+                        layer.alert("修改失败",{icon: 2,time:2000});
                     }
                 }
             });
             return false;
         });
-
-
-
     });
 </script>
 

@@ -59,7 +59,7 @@ public class UserController extends BaseController {
             userService.updateUser(user);
             return new WebResponse().success();
         } catch (Exception e) {
-            String message = "新增用户失败";
+            String message = "修改用户失败";
             log.error(message, e);
             throw new WebException(message);
         }

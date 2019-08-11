@@ -205,7 +205,18 @@
 
         function updateRow(data) {
             if (data.length == 1) {
-                window.location.href = "views/system/user/editUser?userId=" + data[0].userId;
+//                window.location.href = "views/system/user/editUser?userId=" + data[0].userId;
+                layer.open({
+                    type: 2,
+                    title: '修改用户',
+                    area: ['480px', '550px'], //宽高
+                    shadeClose: true,
+                    shade: 0.8,
+                    maxmin: true,//放大缩小按钮
+
+                    content: '/views/system/userUpdate/'+data[0].username  //调到修改页面
+                });
+
             } else {
                 layer.msg('请选中一行记录');
             }
