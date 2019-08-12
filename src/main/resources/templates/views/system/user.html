@@ -1,252 +1,236 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>user</title>
-    <link rel="stylesheet" href="/plugins/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/plugins/layui/css/layui.css">
-    <link rel="stylesheet" href="/css/app.css">
-</head>
-<body class="layui-layout-body">
-<div class="layui-layout layui-layout-admin">
-
-    <div th:replace="views/modules/header :: header"></div>
-    <div th:replace="views/modules/sider :: sider"></div>
-
-    <div class="layui-body">
-        <div style="padding: 15px;">
-
-            <form class="layui-form layui-table-form" lay-filter="user-table-form" id="searchForm">
-                <div class="layui-row">
-                    <div class="layui-col-md10">
-                        <div class="layui-form-item">
-                            <div class="layui-inline">
-                                <label class="layui-form-label layui-form-label-sm">用户名</label>
-                                <div class="layui-input-inline">
-                                    <input type="text" name="username" autocomplete="off" class="layui-input">
-                                </div>
-                            </div>
-                            <div class="layui-inline">
-                                <label class="layui-form-label layui-form-label-sm">状态</label>
-                                <div class="layui-input-inline">
-                                    <select name="status">
-                                        <option value=""></option>
-                                        <option value="0">禁用</option>
-                                        <option value="1">有效</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="layui-inline">
-                                <label class="layui-form-label layui-form-label-sm">手机</label>
-                                <div class="layui-input-inline">
-                                    <input type="text" name="mobile" autocomplete="off" class="layui-input">
-                                </div>
-                            </div>
-                            <div class="layui-inline">
-                                <label class="layui-form-label layui-form-label-sm">部门</label>
-                                <div class="layui-input-inline">
-                                    <input type="text" name="dept" id="dept" lay-filter="dept"
-                                           class="layui-input">
-                                </div>
-                            </div>
-                            <div class="layui-inline">
-                                <label class="layui-form-label layui-form-label-sm">性别</label>
-                                <div class="layui-input-inline">
-                                    <select name="sex">
-                                        <option value=""></option>
-                                        <option value="0">男</option>
-                                        <option value="1">女</option>
-                                        <option value="2">保密</option>
-                                    </select>
-                                </div>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorator="views/layout">
+<head></head>
+<body>
+    <div layout:fragment="content">
+        <form class="layui-form layui-table-form" lay-filter="user-table-form" id="searchForm">
+            <div class="layui-row">
+                <div class="layui-col-md10">
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label layui-form-label-sm">用户名</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="username" autocomplete="off" class="layui-input">
                             </div>
                         </div>
-                    </div>
-                    <div class="layui-col-md2 layui-col-sm12 layui-col-xs12 table-action-area">
-                        <div class="layui-btn layui-btn-sm layui-btn-primary table-action" id="query">
-                            <!--<i class="layui-icon">&#xe848;</i>-->
-                            查询
+                        <div class="layui-inline">
+                            <label class="layui-form-label layui-form-label-sm">状态</label>
+                            <div class="layui-input-inline">
+                                <select name="status">
+                                    <option value=""></option>
+                                    <option value="0">禁用</option>
+                                    <option value="1">有效</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label layui-form-label-sm">手机</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="mobile" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label layui-form-label-sm">部门</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="dept" id="dept" lay-filter="dept"
+                                       class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label layui-form-label-sm">性别</label>
+                            <div class="layui-input-inline">
+                                <select name="sex">
+                                    <option value=""></option>
+                                    <option value="0">男</option>
+                                    <option value="1">女</option>
+                                    <option value="2">保密</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </form>
-
-            <table id="userTable" lay-filter="userTable"></table>
-        </div>
+                <div class="layui-col-md2 layui-col-sm12 layui-col-xs12 table-action-area">
+                    <div class="layui-btn layui-btn-sm layui-btn-primary table-action" id="query">
+                        <!--<i class="layui-icon">&#xe848;</i>-->
+                        查询
+                    </div>
+                </div>
+            </div>
+        </form>
+        <table id="userTable" lay-filter="userTable"></table>
     </div>
-</div>
 </body>
-<script src="/plugins/layui/layui.js"></script>
-<script src="/plugins/jquery/jquery.min.js"></script>
-<script src="/js/app.js"></script>
+<th:block layout:fragment="script">
+    <script type="text/html" id="user-sex">
+        {{#
+        var sex = {
+        2: {title: '保密'},
+        1: {title: '女'},
+        0: {title: '男'}
+        }[d.sex];
+        }}
+        <span>{{ sex.title }}</span>
+    </script>
+    <script type="text/html" id="user-status">
+        {{#
+        var status = {
+        1: {title: '有效', color: 'green'},
+        0: {title: '禁用', color: 'volcano'}
+        }[d.status];
+        }}
+        <span class="layui-badge">{{ status.title }}</span>
+    </script>
+    <script th:inline="none">
 
-<script type="text/html" id="user-sex">
-    {{#
-    var sex = {
-    2: {title: '保密'},
-    1: {title: '女'},
-    0: {title: '男'}
-    }[d.sex];
-    }}
-    <span>{{ sex.title }}</span>
-</script>
-<script type="text/html" id="user-status">
-    {{#
-    var status = {
-    1: {title: '有效', color: 'green'},
-    0: {title: '禁用', color: 'volcano'}
-    }[d.status];
-    }}
-    <span class="layui-badge">{{ status.title }}</span>
-</script>
-<script th:inline="none">
+        //config的设置是全局的
+        //链式编程
+        layui.config({
+            base: '/js/' //假设这是你存放拓展模块的根目录
+        }).extend({ //设定模块别名
+            treeSelect: 'lay/extends/treeSelect'
+        });
 
-    //config的设置是全局的
-    //链式编程
-    layui.config({
-        base: '/js/' //假设这是你存放拓展模块的根目录
-    }).extend({ //设定模块别名
-        treeSelect: 'lay/extends/treeSelect'
-    });
+        layui.use(['jquery','table','form','treeSelect'], function() {
+            var $ = layui.jquery
+                ,table = layui.table
+                ,form = layui.form
+                ,treeSelect = layui.treeSelect
+                ,tableIns;
 
-    layui.use(['jquery','table','form','treeSelect'], function() {
-        var $ = layui.jquery
-            ,table = layui.table
-            ,form = layui.form
-            ,treeSelect = layui.treeSelect
-            ,tableIns;
-
-        //数据表格初始化
-        tableIns = table.render({
-            elem: '#userTable'
-            , height: 530
-            , url: '/system/user/list' //数据接口
-            , method: 'get'
-            , request: {
-                pageName: 'pageNum',//分页参数页码映射
-                limitName: 'pageSize'//分页单页显示量映射
-            },
-            parseData: function (res) {
-                return {
-                    "code": res.code === 200 ? 0 : res.code,//解析后端返回的数据，layui要求code为0
-                    "count": res.data.total,
-                    "data": res.data.rows
+            //数据表格初始化
+            tableIns = table.render({
+                elem: '#userTable'
+                , height: 530
+                , url: '/system/user/list' //数据接口
+                , method: 'get'
+                , request: {
+                    pageName: 'pageNum',//分页参数页码映射
+                    limitName: 'pageSize'//分页单页显示量映射
+                },
+                parseData: function (res) {
+                    return {
+                        "code": res.code === 200 ? 0 : res.code,//解析后端返回的数据，layui要求code为0
+                        "count": res.data.total,
+                        "data": res.data.rows
+                    }
                 }
-            }
-            , page: true //开启分页
-            , limit: 10
-            , limits: [10, 100, 500]
-            , cols: [[ //表头
-                {type: 'checkbox'}
-                , {field: 'userId', title: 'ID', width: 80, sort: true}
-                , {field: 'username', title: '名字', width: 150}
-                , {field: 'company', title: '公司', width: 100}
-                , {field: 'deptName', title: '部门', width: 100}
-                , {field: 'email', title: '邮箱', width: 180}
-                , {field: 'mobile', title: '手机', width: 140}
-                , {templet: '#user-sex', title: '性别', width: 80}
-                , {field: 'description', title: '备注', width: 300}
-                , {templet: '#user-status', title: '状态', width: 80}
-            ]]
-            , toolbar: 'default'
-        });
-
-        treeSelect.render({
-            elem: '#dept',
-            type: 'get',
-            data: '/system/dept/select/tree',
-            placeholder: '请选择',
-            search: false
-        });
-
-        // 条件查询
-        $("#query").on('click', function () {
-            var params={
-                username: $("#searchForm").find('input[name="username"]').val().trim(),
-                status: $("#searchForm").find("select[name='status']").val(),
-                sex: $("#searchForm").find("select[name='sex']").val(),
-                mobile: $("#searchForm").find("input[name='mobile']").val().trim(),
-                deptId: $("#searchForm").find("input[name='dept']").val().trim(),
-                invalidate_ie_cache: new Date()
-            };
-            tableIns.reload({where: params, page: {curr: 1}});
-        });
-
-        //监听工具条
-        table.on('toolbar(userTable)', function (obj) { //注：tool是工具条事件名，postTable是table原始容器的属性 lay-filter="对应的值"
-
-            var data = table.checkStatus('userTable').data; //表格id
-            switch (obj.event) {
-                case 'add':
-                    addRow();
-                    break;
-                case 'update':
-                    updateRow(data);
-                    break;
-                case 'delete':
-                    deleteRow(data);
-                    break;
-            };
-        });
-
-
-        function addRow() {
-            layer.open({
-                type: 2,
-                title: '新增用户',
-                area: ['480px', '550px'], //宽高
-                shadeClose: true,
-                shade: 0.8,
-                maxmin: true,//放大缩小按钮
-
-                content: '/views/system/userAdd'  //调到新增页面
+                , page: true //开启分页
+                , limit: 10
+                , limits: [10, 100, 500]
+                , cols: [[ //表头
+                    {type: 'checkbox'}
+                    , {field: 'userId', title: 'ID', width: 80, sort: true}
+                    , {field: 'username', title: '名字', width: 150}
+                    , {field: 'company', title: '公司', width: 100}
+                    , {field: 'deptName', title: '部门', width: 100}
+                    , {field: 'email', title: '邮箱', width: 180}
+                    , {field: 'mobile', title: '手机', width: 140}
+                    , {templet: '#user-sex', title: '性别', width: 80}
+                    , {field: 'description', title: '备注', width: 300}
+                    , {templet: '#user-status', title: '状态', width: 80}
+                ]]
+                , toolbar: 'default'
             });
-        }
 
-        function updateRow(data) {
-            if (data.length == 1) {
-//                window.location.href = "views/system/user/editUser?userId=" + data[0].userId;
+            treeSelect.render({
+                elem: '#dept',
+                type: 'get',
+                data: '/system/dept/select/tree',
+                placeholder: '请选择',
+                search: false
+            });
+
+            // 条件查询
+            $("#query").on('click', function () {
+                var params={
+                    username: $("#searchForm").find('input[name="username"]').val().trim(),
+                    status: $("#searchForm").find("select[name='status']").val(),
+                    sex: $("#searchForm").find("select[name='sex']").val(),
+                    mobile: $("#searchForm").find("input[name='mobile']").val().trim(),
+                    deptId: $("#searchForm").find("input[name='dept']").val().trim(),
+                    invalidate_ie_cache: new Date()
+                };
+                tableIns.reload({where: params, page: {curr: 1}});
+            });
+
+            //监听工具条
+            table.on('toolbar(userTable)', function (obj) { //注：tool是工具条事件名，postTable是table原始容器的属性 lay-filter="对应的值"
+
+                var data = table.checkStatus('userTable').data; //表格id
+                switch (obj.event) {
+                    case 'add':
+                        addRow();
+                        break;
+                    case 'update':
+                        updateRow(data);
+                        break;
+                    case 'delete':
+                        deleteRow(data);
+                        break;
+                };
+            });
+
+
+            function addRow() {
                 layer.open({
                     type: 2,
-                    title: '修改用户',
+                    title: '新增用户',
                     area: ['480px', '550px'], //宽高
                     shadeClose: true,
                     shade: 0.8,
                     maxmin: true,//放大缩小按钮
 
-                    content: '/views/system/userUpdate/'+data[0].username  //调到修改页面
+                    content: '/views/system/userAdd'  //调到新增页面
                 });
-
-            } else {
-                layer.msg('请选中一行记录');
             }
-        }
 
-        function deleteRow(data) {
-            if (data.length > 0) {
-                var userIds = '';
-                for (var i = 0; i < data.length; i++) {
-                    userIds += data[i].userId + ",";
-                }
-                layer.confirm('确定删除？', function () {
-                    //向服务端发送删除指令
-                    $.ajax({
-                        type: 'post',
-                        url: '/system/user/delete/'+userIds,
-                        //data: {userIds: userIds},
-                        success: function () {
-                            layer.msg('删除成功', {icon: 1}, {time: 2000});
-                            table.reload('userTable', {});
-                        },
-                        error: function () {
-                            layer.msg('删除失败', {icon: 2}, {time: 2000});
-                        }
+            function updateRow(data) {
+                if (data.length == 1) {
+    //                window.location.href = "views/system/user/editUser?userId=" + data[0].userId;
+                    layer.open({
+                        type: 2,
+                        title: '修改用户',
+                        area: ['480px', '550px'], //宽高
+                        shadeClose: true,
+                        shade: 0.8,
+                        maxmin: true,//放大缩小按钮
+
+                        content: '/views/system/userUpdate/'+data[0].username  //调到修改页面
                     });
-                });
-            } else {
-                layer.msg('请至少选中一条记录');
+
+                } else {
+                    layer.msg('请选中一行记录');
+                }
             }
-        }
-    });
-</script>
+
+            function deleteRow(data) {
+                if (data.length > 0) {
+                    var userIds = '';
+                    for (var i = 0; i < data.length; i++) {
+                        userIds += data[i].userId + ",";
+                    }
+                    layer.confirm('确定删除？', function () {
+                        //向服务端发送删除指令
+                        $.ajax({
+                            type: 'post',
+                            url: '/system/user/delete/'+userIds,
+                            //data: {userIds: userIds},
+                            success: function () {
+                                layer.msg('删除成功', {icon: 1}, {time: 2000});
+                                table.reload('userTable', {});
+                            },
+                            error: function () {
+                                layer.msg('删除失败', {icon: 2}, {time: 2000});
+                            }
+                        });
+                    });
+                } else {
+                    layer.msg('请至少选中一条记录');
+                }
+            }
+        });
+    </script>
+</th:block>
 </html>

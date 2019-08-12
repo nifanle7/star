@@ -2,7 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
       layout:decorator="views/layout">
-<div layout:fragment="content">
-    INDEX
-</div>
+<head></head>
+<body>
+    <div layout:fragment="content">
+        INDEX
+    </div>
+</body>
+<th:block layout:fragment="script">
+    <script th:src="@{/js/app.js}"></script>
+</th:block>
 </html>
