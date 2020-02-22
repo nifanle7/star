@@ -63,6 +63,16 @@ public class ViewController {
         return "views/system/dept";
     }
 
+    @GetMapping("views/system/menu")
+    public String menuView() {
+        return "views/system/menu";
+    }
+
+    @GetMapping("views/system/role")
+    public String roleView() {
+        return "views/system/role";
+    }
+
     private void resolveUserModel(String username, Model model, Boolean transform) {
         User user = userService.findByUsername(username);
         model.addAttribute("user", user);
